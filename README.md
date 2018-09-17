@@ -1,51 +1,28 @@
 ## IP Address Ranges
 
 * IPv4 classes
-  - Class A (very large networks): 0.0.0.0 to 127.255.255.255
-  - Class B (medium networks): 128.0.0.0 to 191.255.255.255
-  - Class C (small networks): 192.0.0.0
+  - Class A (very large networks): ``0.0.0.0`` to ``127.255.255.255``
+  - Class B (medium networks): ``128.0.0.0`` to ``191.255.255.255``
+  - Class C (small networks): ``192.0.0.0`` to ``223.255.255.255``
+  - Class D (multicasting): ``224.0.0.0`` to ``239.255.255.255``
+  - Class E (experimental): ``240.0.0.0`` to ``255.255.255.254``
 
 * Private IPv4 addresses
-  - 10.0.0.0/8
-  - 172.16.0.0/12
-  - 192.168.0.0/16
+  - ``10.0.0.0/8``
+  - ``172.16.0.0/12``
+  - ``192.168.0.0/16``
 
 * Special IPv4 user addresses
-  - Loopback: 127.0.0.0/8
-  - Link-local: 169.254.0.0/16
-  - TEST-NET: 192.0.2.0/24
+  - Loopback: ``127.0.0.0/8``
+  - Link-local: ``169.254.0.0/16``
+  - TEST-NET: ``192.0.2.0/24``
 
-
-## Big Data Protocol (BDP) - A Brian Proprietary Protocol
-
-* Basic configuration
-```
-R1# conf t
-R1(config)# interface big-data
-R1(config-if-bd)# blockchain enable
-R1(config-if-bd)# blockchain ledger-flags IMMUTABLE DECENTRALIZED THE-FUTURE-IS-NOW
-R1(config-if-bd)# blockchain block-size extra-wide-to-handle-big-data
-R1(config-if-bd)# exit
-R1(config)# service the-uber-of-finance
-R1(config)# service iot-devices
-R1(config)# service the-cloud
-R1(config)# service turing-complete-smart-contracts
-R1(config)# banner motd *The Next Big Thing™ is here*
-```
-
-* Configuring your VLANs to handle BDP
-```
-S1(config)# int bd0/18
-S1(config-if)# switchport mode incromprehensibly-large-big-data
-S1(config-if)# switchport incromprehensibly-large-big-data allowed "synergy >= 5"
-S1(config-if)# switchport consensus byzantine 
-```
-
-* Debugging your BDP configuration
-```
-R1# show big-data details | section synergy
-```
-**Important:** If your synergy levels are too low, try applying Machine Learning.
+* IPv6 addresses
+  - Default route: ``::/0``
+  - Localhost loopback: ``::1/128``
+  - Unique local: ``fc00::/7``
+  - Link-local: ``fe80::/10``
+  - Multicast: ``ff00::/8``
 
 
 ## Basic Configuration
@@ -539,6 +516,38 @@ S1# show lldp
 S1# show lldp neighbors
 S1# show lldp neighbors detail
 ```
+
+
+## Big Data Protocol (BDP) - A Brian Proprietary Protocol
+
+* Basic configuration
+```
+R1# conf t
+R1(config)# interface big-data
+R1(config-if-bd)# blockchain enable
+R1(config-if-bd)# blockchain ledger-flags IMMUTABLE DECENTRALIZED THE-FUTURE-IS-NOW
+R1(config-if-bd)# blockchain block-size extra-wide-to-handle-big-data
+R1(config-if-bd)# exit
+R1(config)# service the-uber-of-finance
+R1(config)# service iot-devices
+R1(config)# service the-cloud
+R1(config)# service turing-complete-smart-contracts
+R1(config)# banner motd *The Next Big Thing™ is here*
+```
+
+* Configuring your VLANs to handle BDP
+```
+S1(config)# int bd0/18
+S1(config-if)# switchport mode incromprehensibly-large-big-data
+S1(config-if)# switchport incromprehensibly-large-big-data allowed "synergy >= 5"
+S1(config-if)# switchport consensus byzantine 
+```
+
+* Debugging your BDP configuration
+```
+R1# show big-data details | section synergy
+```
+**Important:** If your synergy levels are too low, try applying Machine Learning.
 
 
 ## Network Time Protocol (NTP)
