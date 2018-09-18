@@ -17,12 +17,16 @@
   - Link-local: ``169.254.0.0/16``
   - TEST-NET: ``192.0.2.0/24``
 
-* IPv6 addresses
+* IPv6 special addresses
   - Default route: ``::/0``
   - Localhost loopback: ``::1/128``
   - Unique local: ``fc00::/7``
   - Link-local: ``fe80::/10``
   - Multicast: ``ff00::/8``
+
+* Protocol-specific addresses
+  - IPv4 EIGRP multicast: ``224.0.0.10``
+  - IPv6 EIGRP multicast: ``FF02::A``
 
 
 ## Basic Configuration
