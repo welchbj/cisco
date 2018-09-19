@@ -667,6 +667,8 @@ Router# copy run start
 
 ## VLAN Trunk Protocol (VTP)
 
+* **Important note**: ensure that connections between VTP servers/clients/relays are trunked
+
 * Configure a switch as a VTP server
 ```
 S1(config)# vtp mode server
@@ -675,7 +677,7 @@ S1(config)# vtp domain BRIAN
 S1(config)# vtp password brians-pw
 ```
 
-* Configure a swtich as a VTP client
+* Configure a switch as a VTP client
 ```
 S2(config)# vtp mode client
 S2(config)# vtp domain BRIAN  ! set to the same domain as server
