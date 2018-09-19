@@ -907,6 +907,12 @@ R1(config-router)# network 172.16.3.0 0.0.0.255 area 0
 R1(config)# router ospf 10
 R1(config-router)# network 172.16.1.1 0.0.0.0 area 0
 R1(config-router)# network 172.16.3.1 0.0.0.0 area 0
+
+!! specify routes to be summarized in advertisements
+R1(config)# router ospf 10
+R1(config-router)# network 172.16.1.0 0.0.0.255 area 0
+R1(config-router)# network 172.16.3.0 0.0.0.255 area 0
+R1(config-router)# area 0 range 172.16.0.0 255.255.252.0
 ```
 
 * Manually configure OSPF cost
