@@ -307,7 +307,7 @@ S1# show vlan brief
 
 ## Access Lists
 
-* Create and apply a numbered ACL
+* Create and apply a numbered standard ACL
 ```
 R1(config)# no access-list 1
 R1(config)# access-list 1 deny host 192.168.10.10
@@ -316,7 +316,7 @@ R1(config)# int g0/0
 R1(config-if)# ip access-group 1 in
 ```
 
-* Create and apply a named ACL
+* Create and apply a named standard ACL
 ```
 R1(config)# ip access-list standard NO_ACCESS
 R1(config-std-nacl)# deny host 192.168.11.10
@@ -324,6 +324,39 @@ R1(config-std-nacl)# permit any
 R1(config-std-nacl)# exit
 R1(config)# int g0/0
 R1(config-if)# ip access-group NO_ACCESS out
+```
+
+* Configure a named IPv4 extended ACL to allow HTTP traffic
+```
+R1(config)# ip access-list extended WEB_SURF
+R1(config-ext-nacl)# permit tcp 192.168.10.0 0.0.0.255 any eq 80
+R1(config-ext-nacl)# permit tcp 192.168.10.0 0.0.0.255 any eq 443
+R1(config-ext-nacl)# exit
+R1(config)# ip access-list extended WEB_BROWSE
+R1(config-ext-nacl)# permit tcp any 192.168.10.0 0.0.0.255 established
+R1(config-ext-nacl)# exit
+R1(config)# interface g0/0
+R1(config-if)# ip access-group WEB_SURF in
+R1(config-if)# ip access-group WEB_BROWSE out
+```
+
+* Configure a numbered IPv4 ACL to filter certain FTP traffic between `192.168.11.0/24` and `192.168.10.0/24` networks
+```
+R1(config)# access-list 101 deny tcp 192.168.11.0 0.0.0.255 192.168.10.0 0.0.0.255 eq ftp
+R1(config)# access-list 101 deny tcp 192.168.11.0 0.0.0.255 192.168.10.0 0.0.0.255 eq ftp-data
+R1(config)# access-list 101 permit ip any any
+R1(config)# interface g0/1
+R1(config-if)# ip access-group 101 in
+```
+
+* Configure an IPv6 ACL to deny access for a specific LAN
+```
+R1(config)# ipv6 access-list NO-R3-LAN-ACCESS
+R1(config-ipv6-acl)# deny ipv6 2001:db8:cafe:30::/64 any
+R1(config-ipv6-acl)# permit ipv6 any any
+R1(config-ipv6-acl)# exit
+R1(config)# interface s0/0/0
+R1(config-if)# ipv6 traffic-filter NO-R3-LAN-ACCESS in
 ```
 
 * Replace an entry in an ACL
