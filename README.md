@@ -1108,3 +1108,25 @@ R1(config-if)# no shut
 ! ppp debug commands are still applicable
 R1# show run | section interface Dialer2
 ```
+
+
+## Generic Routing Encapsulation (GRE)
+
+* Configuring GRE; in the below example, router `R2` must be configured with corresponding commands
+```
+R1(config)# interface Tunnel0  ! configure the virtual tunnel interface 
+R1(config-if)# tunnel mode gre ip
+R1(config-if)# ip address 192.168.2.1 255.255.255.0  ! tunnel interface address, typically private
+R1(config-if)# tunnel source 209.165.201.1  ! this is the address of the physical serial interface on this router
+R1(config-if)# tunnel destination 198.133.219.87 ! this is the address of the physical serial interface on the router
+                                                 ! we are tunnelling to
+R1(config-if)# router ospf 1
+R1(config-router)# network 192.168.2.0 0.0.0.255 area 0
+```
+
+* Verifying GRE configuration
+```
+R1# show ip int b | include Tunnel
+R1# show interface Tunnel 0  ! look for `Tunnel source` and `Tunnel protocol/transport` lines
+R1# show ip route | include Tunnel
+```
