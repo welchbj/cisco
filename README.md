@@ -977,7 +977,7 @@ R1# show ip ospf interface brief  ! similar to above, but just shows key informa
 ## SNMP
 
 * Basic SNMP configuration
-``` sh
+```
 R1(config)# snmp-server community communitystring ro SNMP_ACL  ! `ro` specifieis read-only, use `rw` for read-write;
                                                                ! this line also restricts access NMS hosts permitted
                                                                ! by the specified ACL
@@ -991,7 +991,7 @@ R1(config-std-nacl)# permit 192.168.1.3
 ```
 
 * Securely configure SNMP v3
-``` sh
+```
 R1(config)# ip access-list standard PERMIT-ADMIN
 R1(config-std-nacl)# permit 192.168.1.0 0.0.0.255
 R1(config-std-nacl)# exit
@@ -1007,13 +1007,13 @@ R1(config)# snmp-server user BOB ADMIN v3 auth sha authpw priv aes 128 encpw  ! 
 ```
 
 * Configure an SNMP manager
-``` sh
+```
 R1# snmp-server manager
 R1# snmp-server manager session-timeout 10  ! destroy non-active sessions after 10 seconds
 ```
 
 * Verifying SNMP configuration
-``` sh
+```
 R1# show snmp
 R1# show snmp community
 R1# show management event  ! show event values that have been configured
