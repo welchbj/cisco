@@ -1019,3 +1019,17 @@ R1# show snmp community
 R1# show management event  ! show event values that have been configured
 R1# show snmp sessions  ! display current SNMP sessions
 ```
+
+
+## SPAN
+
+* Configuring local SPAN
+```
+S1(config)# monitor session 1 source interface fa0/1  ! these commands accept VLANs in place of interfaces, too
+S1(config)# monitor session 1 destination interface fa0/2
+```
+
+* Verifying local SPAN
+```
+S1# show monitor
+```
