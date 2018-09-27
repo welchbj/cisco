@@ -972,3 +972,50 @@ R1# show int s0/0/0 | include Cost:  ! check for configured cost
 R1# show ip ospf interface  ! see details for every OSPFv2-enabled interface
 R1# show ip ospf interface brief  ! similar to above, but just shows key information
 ```
+
+
+## SNMP
+
+* Basic SNMP configuration
+``` sh
+R1(config)# snmp-server community communitystring ro SNMP_ACL  ! `ro` specifieis read-only, use `rw` for read-write;
+                                                               ! this line also restricts access NMS hosts permitted
+                                                               ! by the specified ACL
+R1(config)# snmp-server NOC_SNMP_MANAGER  ! document the location of the device
+R1(config)# snmp-server contact Wayne World  ! document the system contact
+R1(config)# snmp-server host 192.168.1.3 version 2c communitystring  ! specify the recipient of the SNMP trap operations;
+                                                                     ! version may also specify auth/noauth/priv
+R1(config)# snmp-server enable traps  ! enable traps on this agent; trap level may also be specified here
+R1(config)# ip access-list standard SNMP_ACL
+R1(config-std-nacl)# permit 192.168.1.3
+```
+
+* Securely configure SNMP v3
+``` sh
+R1(config)# ip access-list standard PERMIT-ADMIN
+R1(config-std-nacl)# permit 192.168.1.0 0.0.0.255
+R1(config-std-nacl)# exit
+R1(config)# snmp-server view SNMP-RO iso included  ! create a view to identify which MIB OIDs the manager can read;
+                                                   ! note that this is a requirement to limit messages to read-only;
+                                                   ! this example includes the entire ISO tree from the MIB
+R1(config)# snmp-server group ADMIN v3 priv read SNMP-RO access PERMIT-ADMIN  ! create a group associated with the created view
+R1(config)# snmp-server user BOB ADMIN v3 auth sha authpw priv aes 128 encpw  ! create a user associated with the created
+                                                                              ! group; unsecure alternative to `sha` is `md5`;
+                                                                              ! snmp management software only supports AES 128
+                                                                              ! despite 256-bit support on the router
+ 
+```
+
+* Configure an SNMP manager
+``` sh
+R1# snmp-server manager
+R1# snmp-server manager session-timeout 10  ! destroy non-active sessions after 10 seconds
+```
+
+* Verifying SNMP configuration
+``` sh
+R1# show snmp
+R1# show snmp community
+R1# show management event  ! show event values that have been configured
+R1# show snmp sessions  ! display current SNMP sessions
+```
