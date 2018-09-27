@@ -1033,3 +1033,51 @@ S1(config)# monitor session 1 destination interface fa0/2
 ```
 S1# show monitor
 ```
+
+
+## Point-to-Point Connections
+
+* Configure HDLC encapsulation
+```
+R1(config)# int s0/0/0
+R1(config-if)# encapsulation hdlc
+```
+
+* Configuring basic PPP
+```
+R1(config)# int s0/0/0
+R1(config-if)# encapsulation ppp
+R1(config-if)# compress predictor  ! use predictor compression algorithm, alternative is `stac`
+                                   ! compressing data may degrade performance and should not be
+                                   ! configured if traffic is already compressed (.zip, .tar.gz, etc.)
+R1(config-if)# ppp quality 80  ! link will close if it does not meet 80% quality requirement
+R1(config-if)# ppp multilink  ! enable multilink
+R1(config-if)# ppp multilink group 1  ! add this interface to the multilink group specified;
+                                      ! this must be specified on multiple physical interfaces to 
+                                      ! have an effect
+```
+
+* Configuring PPP authentication
+```
+R1(config)# username R2 password myr1pw  ! note that these are the credentials R2 will use to authenticate on R1
+R1(config)# int s0/0/0
+R1(config-if)# ppp authentication pap  ! `pap`, `chap`, `pap chap`, and `chap pap` are all valid here;
+                                       ! the order DOES matter
+R1(config-if)# ppp sent-username R1 password myr2pw  ! the R1/myr2pw account MUST be configured on R2
+```
+
+* Troubleshooting PPP serial encapsulation
+```
+debug ppp
+debug ppp packet
+debug ppp negotiation
+debug ppp error
+debug ppp authentication
+debug ppp compression
+debug ppp cbcp
+```
+
+* Troubleshooting serial connections
+```
+R1# show interfaces serial 0/0/0  ! look at `Encapsulation:` and `Open:` entries
+```
