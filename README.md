@@ -1130,3 +1130,26 @@ R1# show ip int b | include Tunnel
 R1# show interface Tunnel 0  ! look for `Tunnel source` and `Tunnel protocol/transport` lines
 R1# show ip route | include Tunnel
 ```
+
+
+## Border Gateway Protocol (BGP)
+
+* Configuring BGP; this single-homed example involves a `Company-A` router and its ISP's router `ISP-1`
+```
+Company-A(config)# router bgp 65000  ! enable bgp and set the AS number; there can only be one AS number per router
+Company-A(config-if)# neighbor 209.165.201.1 remote-as 65001  ! identify the BGP peer and its AS number
+Company-A(config-if)# network 198.133.219.0 mask 255.255.255.0  ! enter this network to the BGP table so it is advertised;
+                                                                ! mask must be applied when the network is different than
+                                                                ! its classful equivalent
+
+ISP-1(config)# router bgp 65001
+ISP-1(config-router)# neighbor 209.165.201.2 remote-as 65000
+ISP-1(config-router)# network 0.0.0.0  ! the ISP advertises a default route
+```
+
+* Verifying BGP configuration
+```
+R1# show ip route
+R1# show ip bgp
+R1# show ip bgp summary
+```
