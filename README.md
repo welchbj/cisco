@@ -1081,3 +1081,30 @@ debug ppp cbcp
 ```
 R1# show interfaces serial 0/0/0  ! look at `Encapsulation:` and `Open:` entries
 ```
+
+
+## PPPoE
+
+* Configuring basic PPPoE; assume that our ISP router has user `Fred` and password `Barney` configured and is using CHAP auth
+```
+R1(config)# interface dialer 2  ! ppp tunnel takes place over a virtual dialer interface
+R1(config-if)# ip address negotiated
+R1(config-if)# encapsulation ppp
+R1(config-if)# ppp authentication chap callin
+R1(config-if)# ppp chap hostname Fred  ! authnetication occurs one-way; the ISP authenticates us
+R1(config-if)# ppp chap password Barney
+R1(config-if)# ip mtu 1492  ! this is lowered from the default ppp mtu of 1500 to accommodate the pppoe headers
+R1(config-if)# dialer pool 1  ! this is used for binding our virtual dialer interface to a physical interface
+R1(config-if)# no shut
+R1(config-if)# int g0/1
+R1(config-if)# no ip address
+R1(config-if)# pppoe enable
+R1(config-if)# pppoe-client dial-pool-number 1  ! this must match the pool number specified on the dialer interface
+R1(config-if)# no shut
+```
+
+* Verifying PPPoE
+```
+! ppp debug commands are still applicable
+R1# show run | section interface Dialer2
+```
