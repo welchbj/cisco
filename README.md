@@ -1051,19 +1051,37 @@ R1(config-if)# compress predictor  ! use predictor compression algorithm, altern
                                    ! compressing data may degrade performance and should not be
                                    ! configured if traffic is already compressed (.zip, .tar.gz, etc.)
 R1(config-if)# ppp quality 80  ! link will close if it does not meet 80% quality requirement
+```
+
+* Configuring PPP multilink
+```
+R1(config)# int multilink 1  ! we must create our multilink interface before we can assign a serial interface to it
+R1(config-if)# exit
+R1(config)# int s0/0/0
 R1(config-if)# ppp multilink  ! enable multilink
 R1(config-if)# ppp multilink group 1  ! add this interface to the multilink group specified;
                                       ! this must be specified on multiple physical interfaces to 
                                       ! have an effect
 ```
 
-* Configuring PPP authentication
+* Configuring PPP PAP authentication
 ```
 R1(config)# username R2 password myr1pw  ! note that these are the credentials R2 will use to authenticate on R1
 R1(config)# int s0/0/0
 R1(config-if)# ppp authentication pap  ! `pap`, `chap`, `pap chap`, and `chap pap` are all valid here;
                                        ! the order DOES matter
 R1(config-if)# ppp sent-username R1 password myr2pw  ! the R1/myr2pw account MUST be configured on R2
+```
+
+* Configuring PPP CHAP authentication
+```
+R1(config)# int s0/0/0
+R1(config-if)# ppp authentication chap
+R1(config-if)# ppp chap password mypassword  ! note that the CHAP protocol will implicitly authenticate using this password
+                                             ! paired with this router's hostname; as such, we must create a local account
+                                             ! on the destination router matching the R1/mypassword username/password combo;
+                                             ! if you would like to explicitly set which username is sent via CHAP, execute
+                                             ! the `ppp chap hostname newhostname` command in the interface configuration
 ```
 
 * Troubleshooting PPP serial encapsulation
@@ -1091,7 +1109,7 @@ R1(config)# interface dialer 2  ! ppp tunnel takes place over a virtual dialer i
 R1(config-if)# ip address negotiated
 R1(config-if)# encapsulation ppp
 R1(config-if)# ppp authentication chap callin
-R1(config-if)# ppp chap hostname Fred  ! authnetication occurs one-way; the ISP authenticates us
+R1(config-if)# ppp chap hostname Fred  ! authentication occurs one-way; the ISP authenticates us
 R1(config-if)# ppp chap password Barney
 R1(config-if)# ip mtu 1492  ! this is lowered from the default ppp mtu of 1500 to accommodate the pppoe headers
 R1(config-if)# dialer pool 1  ! this is used for binding our virtual dialer interface to a physical interface
