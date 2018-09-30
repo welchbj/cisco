@@ -1070,7 +1070,7 @@ R1(config)# username R2 password myr1pw  ! note that these are the credentials R
 R1(config)# int s0/0/0
 R1(config-if)# ppp authentication pap  ! `pap`, `chap`, `pap chap`, and `chap pap` are all valid here;
                                        ! the order DOES matter
-R1(config-if)# ppp sent-username R1 password myr2pw  ! the R1/myr2pw account MUST be configured on R2
+R1(config-if)# ppp pap sent-username R1 password myr2pw  ! the R1/myr2pw account MUST be configured on R2
 ```
 
 * Configuring PPP CHAP authentication
