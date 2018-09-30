@@ -1171,3 +1171,21 @@ R1# show ip route
 R1# show ip bgp
 R1# show ip bgp summary
 ```
+
+
+## SLA
+
+* IP SLA ICMP configuration (requires data license)
+```
+R1(config)# ip sla 1
+R1(config-ip-sla)# icmp-echo 192.168.1.5
+R1(config-ip-sla-echo)# frequency 30
+R1(config-ip-sla-echo)# exit
+R1(config)# ip sla schedule 1 start-time now life forever
+````
+
+* Verifying IP SLA configuration
+```
+R1# show ip sla configuration
+R1# show ip sla statistics
+```
