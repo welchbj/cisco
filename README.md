@@ -27,8 +27,10 @@
 * Protocol-specific addresses
   - IPv4 EIGRP multicast: ``224.0.0.10``
   - IPv6 EIGRP multicast: ``FF02::A``
-  - IPv4 OSPF multicast: ``224.0.0.5``
-  - IPv6 OSPF multicast: ``FF02::5``
+  - IPv4 OSPF multicast: ``224.0.0.5`` (OSPF Routers)
+  - IPv4 OSPF multicast: ``224.0.0.6`` (OSPF DR's)
+  - IPv6 OSPF multicast: ``FF02::5`` (OSPF Routers)
+  - IPv6 OSPF multicast: ``FF02::6`` (OSPF DR's)
 
 
 ## Basic Configuration
