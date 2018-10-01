@@ -1113,7 +1113,7 @@ R1(config-if)# encapsulation ppp
 R1(config-if)# ppp authentication chap callin
 R1(config-if)# ppp chap hostname Fred  ! authentication occurs one-way; the ISP authenticates us
 R1(config-if)# ppp chap password Barney
-R1(config-if)# ip mtu 1492  ! this is lowered from the default ppp mtu of 1500 to accommodate the pppoe headers
+R1(config-if)# mtu 1492  ! this is lowered from the default ppp mtu of 1500 to accommodate the pppoe headers
 R1(config-if)# dialer pool 1  ! this is used for binding our virtual dialer interface to a physical interface
 R1(config-if)# no shut
 R1(config-if)# int g0/1
